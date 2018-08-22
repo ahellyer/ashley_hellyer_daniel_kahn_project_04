@@ -77,6 +77,7 @@ app.getMovies = function () {
 
             });
             console.log(prodCountries);
+            app.displayMovies(prodCountries);
 
 
             
@@ -95,7 +96,7 @@ app.getMovies = function () {
 //// Audience rating (Example 82% or 8.2/10)
 //// Top billed case (first n people from the credits)
 //////  Example of credits query for Reservoir Dogs: https://api.themoviedb.org/3/movie/500/credits?api_key=972b4433f3e8f302aee3055dd209330c
-app.displayMovies = function () {
+app.displayMovies = function (countryList) {
     //display base map on the page, setting view and zoom level
     const map = L.map("map").setView([30, 0], 2);
 
@@ -103,7 +104,8 @@ app.displayMovies = function () {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    const movieCountries = ['Italy', 'Australia', 'Russia'];
+    // const movieCountries = ['Italy', 'Australia', 'Russia'];
+    const movieCountries = countryList
     
     // const countryTest = 'United States of America'
     
@@ -149,10 +151,6 @@ app.displayMovies = function () {
         myLayer.addData(countryFeature);
     })
 
-
-
-
-
     //next step - try displaying multiple object on the page at once.
 
 
@@ -178,9 +176,9 @@ app.displayMovies = function () {
 // Start app
 app.init = function () {
     app.events();
-    app.displayMovies();
-    console.log('whatever mam');
-    console.log(app);
+    // app.displayMovies();
+    // console.log('whatever mam');
+    // console.log(app);
     
 }
 
