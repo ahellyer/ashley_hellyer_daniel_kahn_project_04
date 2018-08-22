@@ -4,8 +4,7 @@ const app = {};
 window.app = app;
 
 
-
-// getting desination info from user
+// getting movie info from user
 app.events = function () {
     
     // Event listener for the form submit
@@ -13,80 +12,60 @@ app.events = function () {
         e.preventDefault();
         console.log('user submitted destination');
         
-        // Stores value of the destination the user enters
+        // Stores value of the movie the user enters
         app.userInput = $('.userInput').val();
         console.log(app.userInput);
         
-        // Gets movies with the user input
+        // Gets movie info for the user input
         app.getMovies();
     })
 }
 
 app.apiKey = '972b4433f3e8f302aee3055dd209330c';
-// app.apiURL = 'https://api.themoviedb.org/3';
 app.apiURL = 'https://api.themoviedb.org/3'
 
-// Make AJAX request with user inputted country 
+// Make AJAX request with user inputted movie 
 app.getMovies = function () {
-    //do a general keyword search (/search/movie endpoint) - use query key value pair 
-
-    console.log('getting movies');
 
     $.ajax({
         url: `${app.apiURL}/search/movie`,
         method: 'GET',
         dataType: 'json',
-        
-        // allows us to pass values as a query string
         data: {
             api_key: app.apiKey,
-            // format: 'json',
             query: app.userInput
         }
     })
     .then( res => {
-        // console.log(`Then running HELLO WORLD`);
-        // console.log(res);
+        
         const list = res.results[0];
 
-        // console.log(list);
-
+        //gets the movie id so it can be used in the second ajax call
         const movieID = list.id;
-
-        // console.log(movieID);
 
         $.ajax({
             url: `${app.apiURL}/movie/${movieID}`,
             method: 'GET',
             dataType: 'json',
-
-            // allows us to pass values as a query string
             data: {
                 api_key: app.apiKey,
             }
         })
         .then( res => {
-            // console.log('Movie Details Object');
-            console.log(res);
             
+            //create empty array for the list of production countries
             const prodCountries = [];
+            //for each production country push the name of the country
             res.production_countries.forEach(item => {
-                console.log(item);
-                console.log(item.name);
                 prodCountries.push(item.name);
-
             });
-            console.log(prodCountries);
+            //send the list of production countries to the displayMovies function
             app.displayMovies(prodCountries);
-
-
             
         });
         
     });
 }
-
-
 
 // Display three movies on the page
 // For each movie display
@@ -96,6 +75,7 @@ app.getMovies = function () {
 //// Audience rating (Example 82% or 8.2/10)
 //// Top billed case (first n people from the credits)
 //////  Example of credits query for Reservoir Dogs: https://api.themoviedb.org/3/movie/500/credits?api_key=972b4433f3e8f302aee3055dd209330c
+
 app.displayMovies = function (countryList) {
     //display base map on the page, setting view and zoom level
     const map = L.map("map").setView([30, 0], 2);
@@ -104,13 +84,8 @@ app.displayMovies = function (countryList) {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // const movieCountries = ['Italy', 'Australia', 'Russia'];
-    const movieCountries = countryList
-    
-    // const countryTest = 'United States of America'
-    
-    // console.log(app.world.features[0].properties.name);
-    
+    const movieCountries = countryList;
+        
     //create empty array for coordinate objects for each production country
     const movieCountriesCoordinates = [];
     
@@ -121,15 +96,12 @@ app.displayMovies = function (countryList) {
                 return item.properties.name === country;
             })
         );
-    }
+    };
 
     //for each production country, filter through app.world using the getCoordinates function
     movieCountries.forEach((country) => {
         getCoordinates(country)
     })
-
-    // getCoordinates(countryTest);
-    console.log(movieCountriesCoordinates);
     
     //empty array which will receive the final map features information to display on the page
     const mapFeatures = [];
@@ -140,7 +112,6 @@ app.displayMovies = function (countryList) {
     movieCountriesCoordinates.forEach((country) => {
         //need to get the geometry object for each country
         const geometryObject = country[0].geometry
-        // console.log(geometryObject);
         //we need to construct a map feature object 
         const countryFeature = {
             "type": "Feature",
@@ -149,36 +120,13 @@ app.displayMovies = function (countryList) {
         console.log(countryFeature)
         //we need to add that object to the mapfeatures array
         myLayer.addData(countryFeature);
-    })
-
-    //next step - try displaying multiple object on the page at once.
-
-
-    // const geojsonFeature = {
-    //     "type": "Feature",
-    //     "properties": {
-    //       "name": "Coors Field",
-    //       "amenity": "Baseball Stadium",
-    //       "popupContent": "This is where the Rockies play!"
-    //     },
-    //     "geometry": world.features[4].geometry
-    //   };
-
-     
-    //   const myLayer = L.geoJson().addTo(map);
-    //   myLayer.addData(geojsonFeature);
-
-
-
+    });
 
 }// end of displayMovies
 
 // Start app
 app.init = function () {
     app.events();
-    // app.displayMovies();
-    // console.log('whatever mam');
-    // console.log(app);
     
 }
 
