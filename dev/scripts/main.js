@@ -41,15 +41,15 @@ app.getMovies = function () {
         }
     })
     .then( res => {
-        console.log(`Then running HELLO WORLD`);
+        // console.log(`Then running HELLO WORLD`);
         // console.log(res);
         const list = res.results[0];
 
-        console.log(list);
+        // console.log(list);
 
         const movieID = list.id;
 
-        console.log(movieID);
+        // console.log(movieID);
 
         $.ajax({
             url: `${app.apiURL}/movie/${movieID}`,
@@ -62,11 +62,15 @@ app.getMovies = function () {
             }
         })
         .then( res => {
-            console.log('Movie Details Object');
+            // console.log('Movie Details Object');
             console.log(res);
             
-            const prodCountries = res.production_countries.forEach(item => {
-                return item.name;
+            const prodCountries = [];
+            res.production_countries.forEach(item => {
+                console.log(item);
+                console.log(item.name);
+                prodCountries.push(item.name);
+
             });
             console.log(prodCountries);
 
