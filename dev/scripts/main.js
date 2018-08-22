@@ -107,10 +107,12 @@ app.displayMovies = function () {
     
     // const countryTest = 'United States of America'
     
-    console.log(app.world.features[0].properties.name);
+    // console.log(app.world.features[0].properties.name);
     
+    //create empty array for coordinate objects for each production country
     const movieCountriesCoordinates = [];
     
+    //filtering the app.world object to find the objects that match the production country and pushing them to movieCountriesCoordinates
     const getCoordinates = (country) => { 
         movieCountriesCoordinates.push(
                 app.world.features.filter((item) => {
@@ -119,15 +121,59 @@ app.displayMovies = function () {
         );
     }
 
+    //for each production country, filter through app.world using the getCoordinates function
     movieCountries.forEach((country) => {
         getCoordinates(country)
     })
-    
+
     // getCoordinates(countryTest);
     console.log(movieCountriesCoordinates);
+    
+    //empty array which will receive the final map features information to display on the page
+    const mapFeatures = [];
+    //constructing map features for each country in the movieCountries array using forEach to get the geometry object which we will send to the mapFeatures array
+    
+    const myLayer = L.geoJson().addTo(map);
+
+    movieCountriesCoordinates.forEach((country) => {
+        //need to get the geometry object for each country
+        const geometryObject = country[0].geometry
+        // console.log(geometryObject);
+        //we need to construct a map feature object 
+        const countryFeature = {
+            "type": "Feature",
+            "geometry": geometryObject
+            }
+        console.log(countryFeature)
+        //we need to add that object to the mapfeatures array
+        myLayer.addData(countryFeature);
+    })
 
 
-}
+
+
+
+    //next step - try displaying multiple object on the page at once.
+
+
+    // const geojsonFeature = {
+    //     "type": "Feature",
+    //     "properties": {
+    //       "name": "Coors Field",
+    //       "amenity": "Baseball Stadium",
+    //       "popupContent": "This is where the Rockies play!"
+    //     },
+    //     "geometry": world.features[4].geometry
+    //   };
+
+     
+    //   const myLayer = L.geoJson().addTo(map);
+    //   myLayer.addData(geojsonFeature);
+
+
+
+
+}// end of displayMovies
 
 // Start app
 app.init = function () {
