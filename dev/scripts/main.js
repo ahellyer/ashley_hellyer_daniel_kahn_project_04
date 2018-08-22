@@ -65,8 +65,12 @@ app.getMovies = function () {
             console.log('Movie Details Object');
             console.log(res);
             
-            const prodCountries = res.production_countries;
+            const prodCountries = res.production_countries.forEach(item => {
+                return item.name;
+            });
             console.log(prodCountries);
+
+
             
         });
         
