@@ -52,6 +52,8 @@ app.getMovies = function () {
             }
         })
         .then( res => {
+
+            console.log(res);
             
             //create empty array for the list of production countries
             const prodCountries = [];
@@ -59,6 +61,25 @@ app.getMovies = function () {
             res.production_countries.forEach(item => {
                 prodCountries.push(item.name);
             });
+            
+            // if prodCountries is empty (array length === 0) handle case
+            if(prodCountries.length === 0){
+                console.log('No Countries');
+                $('#noMovies').append(`
+                <p>Sorry! ${app.userInput} does not have any production countries listed.</p>
+                `);
+            };
+
+            // Object containing information about the movie to display to the user
+            app.movieInfo = {}
+
+            app.movieInfo.title = res.title;
+            app.movieInfo.overview = res.overview;
+            app.movieInfo.budget = res.budget;
+            app.movieInfo.tagline = res.tagline;
+            app.movieInfo.poster = res.poster_path;
+            app.movieInfo.vote_average = res.vote_average;
+
             //send the list of production countries to the displayMovies function
             app.displayMovies(prodCountries);
             
@@ -83,7 +104,7 @@ app.displayMovies = function (countryList) {
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
+    
     const movieCountries = countryList;
         
     //create empty array for coordinate objects for each production country
@@ -121,6 +142,21 @@ app.displayMovies = function (countryList) {
         //we need to add that object to the mapfeatures array
         myLayer.addData(countryFeature);
     });
+
+
+    const moviePosterContainer = $('<div>').addClass('moviePoster');
+    const moviePosterImg = $('<img>').attr('src',`https://image.tmdb.org/t/p/w1280/${app.movieInfo.poster}`);
+    moviePosterContainer.append(moviePosterImg);
+    
+    const movieTitle = $('<h2>').text(`${app.movieInfo.title}`);
+    const overview = $('<p>').text(`${app.movieInfo.overview}`);
+    
+    const movieList = $('<ul>').addClass('movieInfoList');
+    const budget = $('<li>').text(`Budget: ${app.movieInfo.budget}`);
+    const vote_average = $('<li>').text(`Vote Average: ${app.movieInfo.vote_average}`);
+    movieList.append(budget, vote_average);
+    
+    $('#movieInfo').append(moviePosterContainer, movieTitle, overview, movieList);
 
 }// end of displayMovies
 
