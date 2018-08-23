@@ -1,7 +1,70 @@
 @import 'setup';
-
-.container {
-	max-width: 900px;
-	margin: 0 auto;
-	color: red;
+body {
+	font-family: 'Roboto', sans-serif;
 }
+
+h1, h2, h3 {
+	font-family: 'Bungee', sans-serif;
+}
+
+img {
+	max-width: 100%;
+}
+
+.wrapper {
+	max-width: 1280px;
+}
+
+header {
+	height: 100vh;
+	background-image: url(../../public/styles/assets/movieBackground.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+
+h1 {
+	text-transform: uppercase;
+	margin: 0;
+	padding: 0;
+	font-size: 6rem;
+	flex: 1 0 50%;
+	height: 50vh;
+}
+
+form {
+	flex: 1 0 50%;
+	height: 30vh;
+}
+
+//styles for map container
+#map {
+	height: 500px;
+	border: 1px solid black;
+	width: 70%;
+}
+
+#movieInfo {
+	width: 30%;
+}
+
+.movieResults {
+	display: flex;
+	height: 80vh;
+}
+
+.posterContainer {
+	width: 80%;
+	margin: 0 auto;
+}
+
+
+
+// <a href='https://www.freepik.com/free-photo/opened-clapperboard-on-white-table_1437373.htm'>Designed by Freepik</a>
+
+//get font info 
