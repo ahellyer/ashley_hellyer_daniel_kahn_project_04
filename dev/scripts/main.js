@@ -3,6 +3,8 @@ const app = {};
 
 window.app = app;
 
+app.randomMovies = ['Three Musketeers', 'roman holiday', 'midnight in paris', 'from russia with love', 'to catch a theif', 'sideways', 'in bruges', 'under the tuscan sun', 'jiro dreams of sushi', 'a good year', 'the best exotic marigold hotel', 'vicky cristina barcelona', 'mad max', 'casablanca', 'a hard day\'s night', 'argo', 'seven samurai', 'the treasure of the sierra madre', 'bicycle thieves', 'the babadook', 'the good, the bad & the ugly', 'lawrence of arabia', 'tokyo story', 'army of shadows', 'Dr.No', '50 first dates', 'the blue lagoon', 'castaway', 'couples retreat', 'donovans reef', 'eat pray love', 'forgetting sarah marshall', 'guns of navarone', 'lord of the flies', 'papillon', 'pirates of the caribbean', 'the beach', 'crouching tiger, hidden dragon', 'motorcycle diaries', 'Cocktail', 'Club Paradise', 'Chronicles of Narnia', 'Journey to Greenland', 'Blindness', 'On the Road']
+// console.log(randomMovies);
 
 // getting movie info from user
 app.events = function () {
@@ -26,6 +28,22 @@ app.events = function () {
         $('.userInput').val('');
         
         // Gets movie info for the user input
+        app.getMovies();
+    })
+
+    // Returns a random movie from the list of random movies
+    $('.randomMovie').on('click', function () {
+        const randomMovie = app.randomMovies[Math.floor(Math.random() * app.randomMovies.length)];
+        console.log(randomMovie);
+
+        app.map.eachLayer(function (layer) {
+            app.map.removeLayer(layer);
+        });
+
+        app.displayMap();
+
+        app.userInput = randomMovie;
+
         app.getMovies();
     })
 }
@@ -85,7 +103,7 @@ app.getMovies = function () {
                 // if prodCountries is empty (array length === 0) handle case
                 if (prodCountries.length === 0) {
                     console.log('No Countries');
-                    $('#noMovies').append(`
+                    $('#noMovies').html(`
                     <p>Sorry! ${app.userInput} does not have any production countries listed.</p>
                     `);
                 };
@@ -106,58 +124,6 @@ app.getMovies = function () {
             });
 
         };
-
-        // console.log('list');
-        // console.log(list);
-
-        // //gets the movie id so it can be used in the second ajax call
-        // const movieID = list.id;
-        // console.log('movieID');
-        // console.log(movieID);
-
-
-        // $.ajax({
-        //     url: `${app.apiURL}/movie/${movieID}`,
-        //     method: 'GET',
-        //     dataType: 'json',
-        //     data: {
-        //         api_key: app.apiKey,
-        //     }
-        // })
-        // .then( res => {
-
-        //     console.log(res);
-            
-        //     //create empty array for the list of production countries
-        //     const prodCountries = [];
-            
-        //     //for each production country push the name of the country
-        //     res.production_countries.forEach(item => {
-        //         prodCountries.push(item.name);
-        //     });
-            
-        //     // if prodCountries is empty (array length === 0) handle case
-        //     if(prodCountries.length === 0){
-        //         console.log('No Countries');
-        //         $('#noMovies').append(`
-        //         <p>Sorry! ${app.userInput} does not have any production countries listed.</p>
-        //         `);
-        //     };
-
-        //     // Object containing information about the movie to display to the user
-        //     app.movieInfo = {}
-
-        //     app.movieInfo.title = res.title;
-        //     app.movieInfo.overview = res.overview;
-        //     app.movieInfo.tagline = res.tagline;
-        //     app.movieInfo.poster = res.poster_path;
-        //     app.movieInfo.vote_average = res.vote_average;
-
-        //     console.log(app.movieInfo);
-        //     //send the list of production countries to the displayMovies function
-        //     app.displayMovies(prodCountries);
-            
-        // });
         
     });
 }
@@ -196,6 +162,7 @@ app.displayMovies = function (countryList) {
     const vote_average = $('<li>').text(`Vote Average: ${app.movieInfo.vote_average}`);
     movieList.append(vote_average);
     
+    $('#movieInfo').empty();
     $('#movieInfo').append(moviePosterContainer, movieTitle, overview, movieList);
 
 
