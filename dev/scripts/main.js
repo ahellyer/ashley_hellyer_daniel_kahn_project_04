@@ -3,6 +3,8 @@ const app = {};
 
 window.app = app;
 
+app.randomMovies = ['Three Musketeers', 'roman holiday', 'midnight in paris', 'from russia with love', 'to catch a theif', 'sideways', 'in bruges', 'under the tuscan sun', 'jiro dreams of sushi', 'a good year', 'the best exotic marigold hotel', 'vicky cristina barcelona', 'mad max', 'casablanca', 'a hard day\'s night', 'argo', 'seven samurai', 'the treasure of the sierra madre', 'bicycle thieves', 'the babadook', 'the good, the bad & the ugly', 'lawrence of arabia', 'tokyo story', 'army of shadows', 'Dr.No', '50 first dates', 'the blue lagoon', 'castaway', 'couples retreat', 'donovans reef', 'eat pray love', 'forgetting sarah marshall', 'guns of navarone', 'lord of the flies', 'papillon', 'pirates of the caribbean', 'the beach', 'crouching tiger, hidden dragon', 'motorcycle diaries', 'Cocktail', 'Club Paradise', 'Chronicles of Narnia', 'Journey to Greenland', 'Blindness', 'On the Road']
+// console.log(randomMovies);
 
 // getting movie info from user
 app.events = function () {
@@ -12,11 +14,36 @@ app.events = function () {
         e.preventDefault();
         console.log('user submitted destination');
         
+        app.map.eachLayer(function (layer) {
+            app.map.removeLayer(layer);
+        });
+        
+        app.displayMap();
+
         // Stores value of the movie the user enters
-        app.userInput = $('.userInput').val();
+        app.userInput = $('.userInput').val().trim();
         console.log(app.userInput);
+
+        // Clears .userInput after submit
+        $('.userInput').val('');
         
         // Gets movie info for the user input
+        app.getMovies();
+    })
+
+    // Returns a random movie from the list of random movies
+    $('.randomMovie').on('click', function () {
+        const randomMovie = app.randomMovies[Math.floor(Math.random() * app.randomMovies.length)];
+        console.log(randomMovie);
+
+        app.map.eachLayer(function (layer) {
+            app.map.removeLayer(layer);
+        });
+
+        app.displayMap();
+
+        app.userInput = randomMovie;
+
         app.getMovies();
     })
 }
@@ -40,32 +67,78 @@ app.getMovies = function () {
         
         const list = res.results[0];
 
-        //gets the movie id so it can be used in the second ajax call
-        const movieID = list.id;
+        if(!list) {
+            console.log('please enter an exact movie title');
+        }
+        else {
+            console.log('list');
+            console.log(list);
 
-        $.ajax({
-            url: `${app.apiURL}/movie/${movieID}`,
-            method: 'GET',
-            dataType: 'json',
-            data: {
-                api_key: app.apiKey,
-            }
-        })
-        .then( res => {
-            
-            //create empty array for the list of production countries
-            const prodCountries = [];
-            //for each production country push the name of the country
-            res.production_countries.forEach(item => {
-                prodCountries.push(item.name);
+            //gets the movie id so it can be used in the second ajax call
+            const movieID = list.id;
+            console.log('movieID');
+            console.log(movieID);
+
+
+            $.ajax({
+                url: `${app.apiURL}/movie/${movieID}`,
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    api_key: app.apiKey,
+                }
+            })
+            .then(res => {
+
+                console.log(res);
+
+                //create empty array for the list of production countries
+                const prodCountries = [];
+
+                //for each production country push the name of the country
+                res.production_countries.forEach(item => {
+                    prodCountries.push(item.name);
+                });
+
+                // if prodCountries is empty (array length === 0) handle case
+                if (prodCountries.length === 0) {
+                    console.log('No Countries');
+                    $('#noMovies').html(`
+                    <p>Sorry! ${app.userInput} does not have any production countries listed.</p>
+                    `);
+                };
+
+                // Object containing information about the movie to display to the user
+                app.movieInfo = {}
+
+                app.movieInfo.title = res.title;
+                app.movieInfo.overview = res.overview;
+                app.movieInfo.tagline = res.tagline;
+                app.movieInfo.poster = res.poster_path;
+                app.movieInfo.vote_average = res.vote_average;
+
+                console.log(app.movieInfo);
+                //send the list of production countries to the displayMovies function
+                app.displayMovies(prodCountries);
+
             });
-            //send the list of production countries to the displayMovies function
-            app.displayMovies(prodCountries);
-            
-        });
+
+        };
         
     });
 }
+
+app.map = L.map("map").setView([30, 0], 2);
+
+// Display Map
+app.displayMap = function(){
+    //display base map on the page, setting view and zoom level
+    // const map = L.map("map").setView([30, 0], 2);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(app.map);
+};
 
 // Display three movies on the page
 // For each movie display
@@ -77,37 +150,56 @@ app.getMovies = function () {
 //////  Example of credits query for Reservoir Dogs: https://api.themoviedb.org/3/movie/500/credits?api_key=972b4433f3e8f302aee3055dd209330c
 
 app.displayMovies = function (countryList) {
-    //display base map on the page, setting view and zoom level
-    const map = L.map("map").setView([30, 0], 2);
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    const moviePosterContainer = $('<div>').addClass('moviePoster');
+    const moviePosterImg = $('<img>').attr('src',`https://image.tmdb.org/t/p/w1280/${app.movieInfo.poster}`);
+    moviePosterContainer.append(moviePosterImg);
+    
+    const movieTitle = $('<h2>').text(`${app.movieInfo.title}`);
+    const overview = $('<p>').text(`${app.movieInfo.overview}`);
+    
+    const movieList = $('<ul>').addClass('movieInfoList');
+    const vote_average = $('<li>').text(`Vote Average: ${app.movieInfo.vote_average}`);
+    movieList.append(vote_average);
+    
+    $('#movieInfo').empty();
+    $('#movieInfo').append(moviePosterContainer, movieTitle, overview, movieList);
 
-    const movieCountries = countryList;
-        
+
+
+    // //display base map on the page, setting view and zoom level
+    // const map = L.map("map").setView([30, 0], 2);
+
+    // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+
     //create empty array for coordinate objects for each production country
     const movieCountriesCoordinates = [];
-    
+
     //filtering the app.world object to find the objects that match the production country and pushing them to movieCountriesCoordinates
-    const getCoordinates = (country) => { 
+    const getCoordinates = (country) => {
+        
         movieCountriesCoordinates.push(
-                app.world.features.filter((item) => {
+            app.world.features.filter((item) => {
                 return item.properties.name === country;
             })
         );
+        
+        console.log(movieCountriesCoordinates);
     };
-
+    
     //for each production country, filter through app.world using the getCoordinates function
-    movieCountries.forEach((country) => {
+    countryList.forEach((country) => {
+        console.log(`CL running`);
         getCoordinates(country)
-    })
-    
+    });
+
     //empty array which will receive the final map features information to display on the page
-    const mapFeatures = [];
+    // const mapFeatures = [];
     //constructing map features for each country in the movieCountries array using forEach to get the geometry object which we will send to the mapFeatures array
-    
-    const myLayer = L.geoJson().addTo(map);
+
+    const myLayer = L.geoJson().addTo(app.map);
 
     movieCountriesCoordinates.forEach((country) => {
         //need to get the geometry object for each country
@@ -116,10 +208,12 @@ app.displayMovies = function (countryList) {
         const countryFeature = {
             "type": "Feature",
             "geometry": geometryObject
-            }
+        }
         console.log(countryFeature)
         //we need to add that object to the mapfeatures array
         myLayer.addData(countryFeature);
+        console.log('myLayer');
+        console.log(myLayer);
     });
 
 }// end of displayMovies
@@ -127,8 +221,9 @@ app.displayMovies = function (countryList) {
 // Start app
 app.init = function () {
     app.events();
+    app.displayMap();
     
-}
+};
 
 $(function () {
     app.init();
