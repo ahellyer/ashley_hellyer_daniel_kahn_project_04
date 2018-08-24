@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
     <link href="https://fonts.googleapis.com/css?family=Bungee|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="./public/styles/style.css">
     <meta charset="utf-8" />
     
@@ -13,33 +15,41 @@
     
 </head>
 <body>
-    <header>
+    <header class="preSubmitted">
+
+        <div class="titleContainer preSubmitted">
         
-        <h1 class="preSubmitted">WOO PROJECT 4</h1>
+            <h1 class="preSubmitted">movie mapper</h1>
 
-        <section>
-            <button class="preSubmitted randomMovie">Show me a random movie!</button>
-            
-            <form action="">
-                <label for="">Where are you going?</label>
-                <input type="text" class="userInput">
-                <button>go/airplane icon</button>
-                <button class="randomMovie">Show me a random movie!</button>
-            </form>
+            <section>
+                
+                <form action="" class="clearfix">
+                    <label for="">An app to discover production countries for your favourite movie </label>
+                    <input type="text" class="userInput" placeholder="Enter a movie">
+                    <div id="noMovies"></div>
+                    <button>
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="preSubmitted randomMovie">Random Movie!</button>
+                </form>
 
-            <div id="noMovies"></div>
-        </section>
+             
+            </section>
+
+        </div>
         
     </header>
 
     <section class="movieResults">
-        <!-- holds info about the movie -->
-        <div id="movieInfo"></div>
-       
-        <!-- holds the map -->
-        <div id="map"></div>
+        
+            <!-- holds info about the movie -->
+            <div id="movieInfo"></div>
+        
+            <!-- holds the map -->
+            <div id="map"></div>
 
-       
+        
+
     </section>
 
 
