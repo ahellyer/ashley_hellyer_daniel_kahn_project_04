@@ -1,11 +1,17 @@
 @import 'setup';
+@import 'utils';
 
 body {
 	font-family: 'Roboto', sans-serif;
+	font-size: 2rem;
 }
 
 h1, h2, h3 {
 	font-family: 'Bungee', sans-serif;
+}
+
+h2 {
+	font-size: 3.5rem;
 }
 
 img {
@@ -13,7 +19,9 @@ img {
 }
 
 .wrapper {
-	max-width: 1280px;
+	max-width: $wrapperMaxWidth;
+	width: $wrapperWidth;
+	margin: 0 auto;
 }
 
 header {
@@ -106,25 +114,35 @@ button {
 	font-size: 1.6rem;
 }
 
-//styles for map container
-#map {
-	height: 500px;
-	border: 1px solid black;
-	width: 65%;
-}
-
-#movieInfo {
-	width: 20%;
-}
+// MovieResults Section
 
 .movieResults {
 	display: flex;
 	height: 80vh;
+	width: 100%;
+	flex-wrap: wrap;
 }
 
-.posterContainer {
-	width: 60%;
+.movieInfo {
+	width: 100%;
+	display: flex;
+}
+
+//styles for map container
+.map {
+	height: 500px;
+	border: 1px solid black;
+	width: $wrapperWidth;
+	max-width: $wrapperMaxWidth;
 	margin: 0 auto;
+}
+
+.moviePoster {
+	width: 30%;
+}
+
+.movieTextInfo {
+	width: 70%;
 }
 
 

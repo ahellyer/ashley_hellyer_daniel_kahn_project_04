@@ -215,9 +215,13 @@ app.displayMovies = function (countryList) {
     
     const movieList = $('<ul>').addClass('movieInfoList');
     movieList.append(prodCountries, vote_average);
+
+    const movieTextInfo = $('<div>').attr('class','movieTextInfo');
+
+    movieTextInfo.append(movieTitle, overview, movieList);
     
     $('#movieInfo').empty();
-    $('#movieInfo').append(moviePosterContainer, movieTitle, overview, movieList);
+    $('#movieInfo').append(moviePosterContainer, movieTextInfo);
 
 
 

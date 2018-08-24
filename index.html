@@ -15,42 +15,48 @@
     
 </head>
 <body>
+    <div class="warpper">
+    
     <header class="preSubmitted">
+       
+        <div class="wrapper">
+            <div class="titleContainer preSubmitted">
+            
+                <h1 class="preSubmitted">movie mapper</h1>
+                    
+                    <form action="" class="clearfix">
+                        <label for="">An app to discover production countries for your favourite movie </label>
+                        <input type="text" class="userInput" placeholder="Enter a movie">
+                        <div id="noMovies"></div>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="preSubmitted randomMovie">Random Movie!</button>
+                    </form>
 
-        <div class="titleContainer preSubmitted">
-        
-            <h1 class="preSubmitted">movie mapper</h1>
-
-            <section>
-                
-                <form action="" class="clearfix">
-                    <label for="">An app to discover production countries for your favourite movie </label>
-                    <input type="text" class="userInput" placeholder="Enter a movie">
-                    <div id="noMovies"></div>
-                    <button>
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="preSubmitted randomMovie">Random Movie!</button>
-                </form>
-
-             
-            </section>
+            </div>
+            <!-- End of Wrapper -->
 
         </div>
-        
     </header>
 
-    <section class="movieResults">
-        
-            <!-- holds info about the movie -->
-            <div id="movieInfo"></div>
-        
-            <!-- holds the map -->
-            <div id="map"></div>
+    <main>
+        <section class="movieResults">
+            <div class="wrapper">
+            
+                <!-- holds info about the movie -->
+                <div class="movieInfo" id="movieInfo"></div>
+            
+            </div>
+                
+                <!-- holds the map -->
+                <div class="map" id="map"></div>
 
-        
-
-    </section>
+            
+            <!-- end of wrapper -->
+        </section>
+    </main>
+    
 
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet-src.js"></script>
