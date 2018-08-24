@@ -27,7 +27,6 @@ app.randomMovies = [
     'tokyo story',
     'army of shadows',
     'Dr. No',
-    'castaway',
     'guns of navarone',
     'papillon',
     'the beach',
@@ -163,6 +162,7 @@ app.getMovies = function () {
                     app.movieInfo.poster = res.poster_path;
                     app.movieInfo.vote_average = res.vote_average;
                     app.movieInfo.prodCountries = prodCountries;
+                    app.movieInfo.tagline = res.tagline;
     
                     // Send the list of production countries to the displayMovies function
                     app.displayMovies(prodCountries);
@@ -202,13 +202,16 @@ app.displayMovies = function (countryList) {
     
     const movieTitle = $('<h2>').text(`${app.movieInfo.title}`);
     const overview = $('<p>').text(`${app.movieInfo.overview}`);
+
+    const tagTitle = $('<h3>').text('Tag Line');
+    const tagline = $('<p>').text(`${app.movieInfo.tagline}`);
     
-    const vote_average = $('<li>').text(`Vote Average: ${app.movieInfo.vote_average}`);
+    const vote_average = $('<li>').append($('<h3>').text(`${app.movieInfo.vote_average}/10`));
     
-    const prodCountries = $('<li>').text('Production Countries');
+    const prodCountries = $('<li>').append($('<h3>').text('Production Countries'));
     const prodCountriesUl = $('<ul>').addClass('prodCountries');
     app.movieInfo.prodCountries.forEach(country => {
-        const countryLi = $('<li>').text(`${country}`);
+        const countryLi = $('<li>').text(`${country}`).addClass('prodCountry');
         prodCountriesUl.append(countryLi);
     });
     prodCountries.append(prodCountriesUl);
@@ -218,7 +221,9 @@ app.displayMovies = function (countryList) {
 
     const movieTextInfo = $('<div>').attr('class','movieTextInfo');
 
-    movieTextInfo.append(movieTitle, overview, movieList);
+
+
+    movieTextInfo.append(movieTitle, overview, tagTitle, tagline, movieList);
     
     $('#movieInfo').empty();
     $('#movieInfo').append(moviePosterContainer, movieTextInfo);

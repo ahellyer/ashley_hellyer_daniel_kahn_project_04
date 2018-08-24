@@ -135,6 +135,10 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 html {
   font-size: 62.5%; }
 
+* {
+  margin: 0;
+  padding: 0; }
+
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 2rem; }
@@ -166,7 +170,7 @@ header {
 
 header.submitted {
   height: 15vh;
-  background: white; }
+  background: #fde139; }
 
 .titleContainer {
   width: 50%;
@@ -191,6 +195,13 @@ h1.submitted {
   font-size: 4rem;
   flex: 1 0 25%;
   align-self: center; }
+
+ul {
+  list-style: none; }
+
+main {
+  background: white;
+  margin: 50px 0 0 0; }
 
 form {
   width: 80%;
@@ -258,7 +269,6 @@ form.submitted #noMovies {
 
 .movieResults {
   display: flex;
-  height: 80vh;
   width: 100%;
   flex-wrap: wrap; }
 
@@ -266,15 +276,30 @@ form.submitted #noMovies {
   width: 100%;
   display: flex; }
 
+.prodCountriesHeader {
+  font-family: 'Bungee', sans-serif; }
+
+.prodCountry {
+  font-family: 'Roboto', sans-serif;
+  margin: 5px 0; }
+
+.prodCountry::before {
+  content: "\f57d";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 800;
+  padding-right: 8px;
+  font-size: 1.6rem; }
+
 .map {
   height: 500px;
   border: 1px solid black;
   width: 90%;
   max-width: 1280px;
-  margin: 0 auto; }
+  margin: 30px auto; }
 
 .moviePoster {
   width: 30%; }
 
 .movieTextInfo {
-  width: 70%; }
+  width: 70%;
+  padding: 0 0 0 50px; }
