@@ -4,7 +4,56 @@ const app = {};
 window.app = app;
 
 // List of random movies which the user could see when they click the randomMovie button
-app.randomMovies = ['Slumdog Millionaire', 'Three Musketeers', 'roman holiday', 'midnight in paris', 'from russia with love', 'to catch a theif', 'sideways', 'in bruges', 'under the tuscan sun', 'jiro dreams of sushi', 'a good year', 'the best exotic marigold hotel', 'vicky cristina barcelona', 'mad max', 'casablanca', 'a hard day\'s night', 'argo', 'seven samurai', 'the treasure of the sierra madre', 'bicycle thieves', 'the babadook', 'the good, the bad & the ugly', 'lawrence of arabia', 'tokyo story', 'army of shadows', 'Dr.No', '50 first dates', 'the blue lagoon', 'castaway', 'couples retreat', 'donovans reef', 'eat pray love', 'forgetting sarah marshall', 'guns of navarone', 'lord of the flies', 'papillon', 'pirates of the caribbean', 'the beach', 'crouching tiger, hidden dragon', 'motorcycle diaries', 'Cocktail', 'Club Paradise', 'Chronicles of Narnia', 'Journey to Greenland', 'Blindness', 'On the Road'];
+app.randomMovies = [
+    'A Fantastic Woman',
+    'Theeb', 
+    'Ida', 
+    'Leviathan', 
+    'Slumdog Millionaire', 
+    'Three Musketeers',
+    'midnight in paris',
+    'from russia with love',
+    'in bruges',
+    'under the tuscan sun',
+    'the best exotic marigold hotel',
+    'vicky cristina barcelona',
+    'mad max',
+    'a hard day\'s night',
+    'seven samurai',
+    'bicycle thieves',
+    'the babadook',
+    'the good, the bad & the ugly',
+    'lawrence of arabia',
+    'tokyo story',
+    'army of shadows',
+    'Dr. No',
+    'castaway',
+    'guns of navarone',
+    'papillon',
+    'the beach',
+    'crouching tiger, hidden dragon',
+    'the motorcycle diaries',
+    'Chronicles of Narnia',
+    'Journey to Greenland',
+    'Blindness',
+    'On the Road',
+    'Amelie',
+    'Incendies',
+    'Das Boot',
+    'City of God',
+    ' Pan\'s Labyrinth',
+    'The Sea Inside',
+    'Let the Right One In',
+    'About Elly',
+    'Bhaag Milkha Bhaag',
+    'Letters from Iwo Jima',
+    'Air Bud',
+    'The Artist',
+    'Incendies',
+    'Ajami',
+    'Mongol',
+    'Tsotsi'
+];
 
 
 // getting movie info from user
@@ -66,9 +115,12 @@ app.getMovies = function () {
         const list = res.results[0];
 
         if(!list) {
-            $('#noMovies').append(`<p class="noMatch">Unfortunately your search did not return a match. Please enter an exact movie title.</p>`);
+            $('#noMovies').html(`<p class="noMatch">Unfortunately your search for "${app.userInput}" did not return a match. Please enter another movie title.</p>`);
         }
         else {
+            
+            // If the if block runs this clears id="noMovies" when a match is made
+            $('#noMovies').empty();
 
             //gets the movie id so it can be used in the second ajax call
             const movieID = list.id;
@@ -110,6 +162,7 @@ app.getMovies = function () {
                     app.movieInfo.tagline = res.tagline;
                     app.movieInfo.poster = res.poster_path;
                     app.movieInfo.vote_average = res.vote_average;
+                    app.movieInfo.prodCountries = prodCountries;
     
                     // Send the list of production countries to the displayMovies function
                     app.displayMovies(prodCountries);
@@ -150,9 +203,18 @@ app.displayMovies = function (countryList) {
     const movieTitle = $('<h2>').text(`${app.movieInfo.title}`);
     const overview = $('<p>').text(`${app.movieInfo.overview}`);
     
-    const movieList = $('<ul>').addClass('movieInfoList');
     const vote_average = $('<li>').text(`Vote Average: ${app.movieInfo.vote_average}`);
-    movieList.append(vote_average);
+    
+    const prodCountries = $('<li>').text('Production Countries');
+    const prodCountriesUl = $('<ul>').addClass('prodCountries');
+    app.movieInfo.prodCountries.forEach(country => {
+        const countryLi = $('<li>').text(`${country}`);
+        prodCountriesUl.append(countryLi);
+    });
+    prodCountries.append(prodCountriesUl);
+    
+    const movieList = $('<ul>').addClass('movieInfoList');
+    movieList.append(prodCountries, vote_average);
     
     $('#movieInfo').empty();
     $('#movieInfo').append(moviePosterContainer, movieTitle, overview, movieList);
