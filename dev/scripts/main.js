@@ -5,7 +5,7 @@ window.app = app;
 
 // List of random movies which the user could see when they click the randomMovie button
 app.randomMovies = [
-    'A Fantastic Woman',
+    'A Fantastic Woman', 
     'Theeb', 
     'Ida', 
     'Leviathan', 
@@ -163,6 +163,8 @@ app.getMovies = function () {
                     app.movieInfo.poster = res.poster_path;
                     app.movieInfo.vote_average = res.vote_average;
                     app.movieInfo.prodCountries = prodCountries;
+
+                    console.log(app.movieInfo.tagline);
     
                     // Send the list of production countries to the displayMovies function
                     app.displayMovies(prodCountries);
