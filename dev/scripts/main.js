@@ -164,7 +164,6 @@ app.getMovies = function () {
                     app.movieInfo.vote_average = res.vote_average;
                     app.movieInfo.prodCountries = prodCountries;
 
-                    console.log(app.movieInfo.tagline);
     
                     // Send the list of production countries to the displayMovies function
                     app.displayMovies(prodCountries);
