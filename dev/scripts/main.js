@@ -47,7 +47,12 @@ app.randomMovies = [
     'About Elly',
     'Bhaag Milkha Bhaag',
     'Letters from Iwo Jima',
-    'Air Bud'
+    'Air Bud',
+    'The Artist',
+    'Incendies',
+    'Ajami',
+    'Mongol',
+    'Tsotsi'
 ];
 
 
