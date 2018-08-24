@@ -5,7 +5,7 @@ window.app = app;
 
 // List of random movies which the user could see when they click the randomMovie button
 app.randomMovies = [
-    'A Fantastic Woman',
+    'A Fantastic Woman', 
     'Theeb', 
     'Ida', 
     'Leviathan', 

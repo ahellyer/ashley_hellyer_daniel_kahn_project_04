@@ -29,28 +29,36 @@ img {
 	margin: 0 auto;
 }
 
+.headerContainer {
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.headerContainer.submitted {
+	height: 15vh;
+}
 
 header {
-	height: 100vh;
-	// background-image: url(../../public/styles/assets/movieBackground.jpg);
-	background-image: url(../../public/styles/assets/yellowBackground.jpg);
 
-	background-size: cover;
+	// background-image: url(../../public/styles/assets/yellowBackground.jpg);
+	background: rgb(233, 194, 53);
+	// background-image: url(../../public/styles/assets/cameraWithBgGradient.png);
+	background-size: contain;
 	background-repeat: no-repeat;
-	background-position: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-end;
+	background-position-x: 0;
+	background-position-y: -50%;
 }
 
 header.submitted {
 	height: 15vh;
-	background: rgb(253, 225, 57);
+	background: rgb(233, 194, 53);
+
 }
 
 .titleContainer {
-	// height: 100vh;
 	width: 50%;
 	display: flex;
 	flex-direction: column;
@@ -70,6 +78,7 @@ h1.preSubmitted {
 	font-size: 10rem;
 	flex: 1 0 50%;
 	font-family: 'Bungee Shade';
+	// color: white;
 }
 
 h1.submitted {
@@ -145,12 +154,13 @@ button {
 	flex: 1 0 calc(50% - 10px);
 	margin: 5px;
 	display: inline-block;
-	background: #FABC09;
+	background:  rgba(255, 255, 255, 0.7);
 }
 
 form.submitted button {
 	flex: 1 0 calc(25% - 15px);
 	margin-left: 10px;
+	
 }
 
 #noMovies {
@@ -210,7 +220,7 @@ form.submitted #noMovies {
 	padding: 0 0 0 50px ;
 }
 
-
+@import 'mediaQueries';
 
 // <a href='https://www.freepik.com/free-photo/opened-clapperboard-on-white-table_1437373.htm'>Designed by Freepik</a>
 
