@@ -87,6 +87,17 @@ h1.submitted {
 	align-self: center;
 }
 
+
+// Main - Movie Result Section
+
+ul {
+	list-style: none;
+}
+
+main {
+	background: white;
+	margin: 50px 0 0 0;
+}
 form {
 	width: 80%;
 	display: flex;
@@ -165,7 +176,6 @@ form.submitted #noMovies {
 
 .movieResults {
 	display: flex;
-	height: 80vh;
 	width: 100%;
 	flex-wrap: wrap;
 }
@@ -175,13 +185,30 @@ form.submitted #noMovies {
 	display: flex;
 }
 
+.prodCountriesHeader {
+	font-family: 'Bungee', sans-serif;
+}
+
+.prodCountry {
+	font-family: 'Roboto', sans-serif;
+	margin: 5px 0;
+}
+
+.prodCountry::before {
+	content: "\f57d";
+	font-family: "Font Awesome 5 Free";
+	font-weight: 800;
+	padding-right: 8px;
+	font-size: 1.6rem;
+}
+
 //styles for map container
 .map {
 	height: 500px;
 	border: 1px solid black;
 	width: $wrapperWidth;
 	max-width: $wrapperMaxWidth;
-	margin: 0 auto;
+	margin: 30px auto;
 }
 
 .moviePoster {
@@ -190,6 +217,7 @@ form.submitted #noMovies {
 
 .movieTextInfo {
 	width: 70%;
+	padding: 0 0 0 50px ;
 }
 
 @import 'mediaQueries';
