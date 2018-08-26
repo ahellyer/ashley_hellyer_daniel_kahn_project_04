@@ -175,7 +175,7 @@ header {
   background-position-y: -50%; }
 
 header.submitted {
-  height: 15vh;
+  min-height: 15vh;
   background: #e9c235; }
 
 .titleContainer {
@@ -188,6 +188,10 @@ header.submitted {
   flex-direction: row;
   width: 100%;
   align-items: center; }
+
+.logoContainer.submitted {
+  width: 150px;
+  padding-top: 15px; }
 
 h1.preSubmitted {
   text-transform: uppercase;
@@ -239,7 +243,7 @@ form input {
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
-  margin-bottom: 10px; }
+  margin-bottom: 5px; }
 
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -267,11 +271,12 @@ form.submitted button {
 
 #noMovies {
   color: red;
-  font-size: 1.6rem; }
+  font-size: 1.6rem;
+  padding: 10px 0; }
 
 form.submitted #noMovies {
   order: 2;
-  margin: 0; }
+  margin-bottom: 5px; }
 
 .movieResults {
   display: flex;
@@ -310,19 +315,28 @@ form.submitted #noMovies {
   width: 70%;
   padding: 0 0 0 50px; }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .titleContainer {
     width: 65%; }
   h1.preSubmitted {
     font-size: 8rem; }
+  h1.submitted {
+    font-size: 3rem; }
   form.submitted button {
-    flex: 1 0 calc(10% - 15px); } }
+    flex: 1 0 calc(10% - 15px);
+    font-size: 1.6rem; } }
+
+@media (max-width: 1000px) {
+  h1.submitted {
+    display: none; } }
 
 @media (max-width: 850px) {
   .titleContainer {
     width: 100%; }
   .headerContainer {
     align-items: center; }
+  input {
+    text-align: center; }
   header.preSubmitted {
     background-image: none;
     background: #e9c235; } }
@@ -332,14 +346,45 @@ form.submitted #noMovies {
     flex-direction: column; }
   .logoContainer {
     width: 50%; }
+  .logoContainer.submitted {
+    display: none; }
   .titleContainer {
     text-align: center; }
+  h1.preSubmitted {
+    font-size: 6rem; }
   form {
     text-align: center;
-    margin: 0 auto; }
+    margin: 0 auto;
+    width: auto; }
   ::placeholder {
     text-align: center; } }
 
+@media (max-width: 600px) {
+  form.submitted {
+    align-items: stretch;
+    width: 100%; }
+  form.submitted input {
+    height: 35px;
+    font-size: 1.6rem; }
+  form.submitted button {
+    flex: 1 0 calc(50% - 15px);
+    height: 40px; }
+  .titleContainer.submitted {
+    flex-direction: column; }
+  header.submitted {
+    height: 20vh; } }
+
 @media (max-width: 450px) {
   h1.preSubmitted {
-    font-size: 4rem; } }
+    font-size: 4rem; }
+  #noMovies {
+    font-size: 1.2rem;
+    padding: 0; } }
+
+@media (max-width: 380px) {
+  .titleContainer label {
+    font-size: 1.6rem; }
+  form.preSubmitted {
+    width: 75%; }
+  form.preSubmitted input {
+    font-size: 1.2rem; } }
