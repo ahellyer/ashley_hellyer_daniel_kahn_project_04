@@ -114,7 +114,7 @@ app.getMovies = function () {
         const list = res.results[0];
 
         if(!list) {
-            $('#noMovies').html(`<p class="noMatch">Unfortunately your search for "${app.userInput}" did not return a match. Please enter another movie title.</p>`);
+            $('#noMovies').html(`<p class="noMatch">"${app.userInput}" did not return a match. Try again!</p>`);
         }
         else {
             
@@ -162,6 +162,8 @@ app.getMovies = function () {
                     app.movieInfo.poster = res.poster_path;
                     app.movieInfo.vote_average = res.vote_average;
                     app.movieInfo.prodCountries = prodCountries;
+
+                    app.movieInfo.tagline = res.tagline;
     
                     // Send the list of production countries to the displayMovies function
                     app.displayMovies(prodCountries);
