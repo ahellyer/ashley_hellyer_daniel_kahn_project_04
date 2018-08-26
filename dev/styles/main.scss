@@ -95,13 +95,16 @@ h1.submitted {
 
 // Main - Movie Result Section
 
+
 ul {
 	list-style: none;
 }
 
 main {
+	position: relative;
 	background: white;
-	margin: 50px 0 0 0;
+	padding: 50px 0 0 0;
+	z-index: 1;
 }
 form {
 	width: 80%;
@@ -191,6 +194,34 @@ form.submitted #noMovies {
 	display: flex;
 }
 
+.tagline {
+	background: lightgrey;
+	padding: 25px;
+	margin: 25px;
+	display: inline-block;
+	position: relative;
+}
+
+.tagline::before {
+	content: "1“” 2‟ 3„‟‘’";
+	top:-20px;
+	left: -20px;
+	font-family: cursive;
+}
+.tagline::after {
+	content: "❞";
+	bottom: -60px;
+	right: -20px;
+}
+
+.tagline::before,
+.tagline::after {
+	position: absolute;
+	font-size: 8rem;
+}
+
+
+
 .prodCountriesHeader {
 	font-family: 'Bungee', sans-serif;
 }
@@ -209,20 +240,31 @@ form.submitted #noMovies {
 }
 
 //styles for map container
+// Map breaks if trying to set to display none and back to block/inline-block/etc.
+// Hiding with z-index and position
+
 .map {
 	height: 500px;
 	border: 1px solid black;
 	width: $wrapperWidth;
 	max-width: $wrapperMaxWidth;
 	margin: 30px auto;
+	position: absolute;
+	top: 0;
+	z-index: -1;
+}
+
+.map.submitted {
+	position: relative;
+	z-index: 20;
 }
 
 .moviePoster {
-	width: 30%;
+	width: 20%;
 }
 
 .movieTextInfo {
-	width: 70%;
+	width: 80%;
 	padding: 0 0 0 50px ;
 }
 

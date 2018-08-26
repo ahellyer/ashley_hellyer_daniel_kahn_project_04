@@ -1,3 +1,4 @@
+@charset "UTF-8";
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
   display: block; }
 
@@ -210,8 +211,10 @@ ul {
   list-style: none; }
 
 main {
+  position: relative;
   background: white;
-  margin: 50px 0 0 0; }
+  padding: 50px 0 0 0;
+  z-index: 1; }
 
 form {
   width: 80%;
@@ -287,6 +290,29 @@ form.submitted #noMovies {
   width: 100%;
   display: flex; }
 
+.tagline {
+  background: lightgrey;
+  padding: 25px;
+  margin: 25px;
+  display: inline-block;
+  position: relative; }
+
+.tagline::before {
+  content: "1“” 2‟ 3„‟‘’";
+  top: -20px;
+  left: -20px;
+  font-family: cursive; }
+
+.tagline::after {
+  content: "❞";
+  bottom: -60px;
+  right: -20px; }
+
+.tagline::before,
+.tagline::after {
+  position: absolute;
+  font-size: 8rem; }
+
 .prodCountriesHeader {
   font-family: 'Bungee', sans-serif; }
 
@@ -306,13 +332,20 @@ form.submitted #noMovies {
   border: 1px solid black;
   width: 90%;
   max-width: 1280px;
-  margin: 30px auto; }
+  margin: 30px auto;
+  position: absolute;
+  top: 0;
+  z-index: -1; }
+
+.map.submitted {
+  position: relative;
+  z-index: 20; }
 
 .moviePoster {
-  width: 30%; }
+  width: 20%; }
 
 .movieTextInfo {
-  width: 70%;
+  width: 80%;
   padding: 0 0 0 50px; }
 
 @media (max-width: 1200px) {
