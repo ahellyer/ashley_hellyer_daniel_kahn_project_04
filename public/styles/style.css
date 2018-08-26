@@ -166,7 +166,7 @@ img {
   align-items: center; }
 
 .headerContainer.submitted {
-  height: 15vh; }
+  height: 140px; }
 
 header {
   background: #e9c235;
@@ -176,23 +176,23 @@ header {
   background-position-y: -50%; }
 
 header.submitted {
-  min-height: 15vh;
+  min-height: 140px;
   background: #e9c235; }
 
 .titleContainer {
   width: 50%;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  background: #e9c235; }
 
 .titleContainer.submitted {
-  height: 10vh;
   flex-direction: row;
   width: 100%;
   align-items: center; }
 
 .logoContainer.submitted {
-  width: 150px;
-  padding-top: 15px; }
+  width: 110px;
+  margin-right: 15px; }
 
 h1.preSubmitted {
   text-transform: uppercase;
@@ -231,8 +231,17 @@ form label {
   width: 100%;
   font-size: 2rem; }
 
-form label.submitted {
-  display: none; }
+form label.submitted:not(:focus):not(:active) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0);
+  overflow: hidden; }
 
 form input {
   flex: 1 0 100%;
@@ -275,7 +284,9 @@ form.submitted button {
 #noMovies {
   color: red;
   font-size: 1.6rem;
-  padding: 10px 0; }
+  padding: 10px 0;
+  text-align: center;
+  width: 100%; }
 
 form.submitted #noMovies {
   order: 2;
@@ -375,10 +386,17 @@ form.submitted #noMovies {
     background: #e9c235; } }
 
 @media (max-width: 750px) {
-  .headerContainer {
-    flex-direction: column; }
+  .headerContainer.preSubmitted {
+    flex-direction: column;
+    padding-top: 100px;
+    justify-content: flex-start;
+    min-height: 750px; }
+  .headerContainer.submitted {
+    padding-top: 15px;
+    justify-content: center;
+    min-height: 0; }
   .logoContainer {
-    width: 50%; }
+    width: 25%; }
   .logoContainer.submitted {
     display: none; }
   .titleContainer {
@@ -393,6 +411,8 @@ form.submitted #noMovies {
     text-align: center; } }
 
 @media (max-width: 600px) {
+  .headerContainer {
+    padding-top: 100px; }
   form.submitted {
     align-items: stretch;
     width: 100%; }
@@ -405,14 +425,18 @@ form.submitted #noMovies {
   .titleContainer.submitted {
     flex-direction: column; }
   header.submitted {
-    height: 20vh; } }
+    height: 140px; } }
 
 @media (max-width: 450px) {
   h1.preSubmitted {
     font-size: 4rem; }
   #noMovies {
     font-size: 1.2rem;
-    padding: 0; } }
+    padding: 0; }
+  .headerContainer.preSubmitted {
+    min-height: 600px; }
+  .headerContainer.submitted {
+    min-height: 0; } }
 
 @media (max-width: 380px) {
   .titleContainer label {

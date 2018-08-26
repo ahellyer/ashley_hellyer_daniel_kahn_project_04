@@ -43,12 +43,22 @@
 }
 
 @media (max-width: 750px) {
-    .headerContainer {
+    .headerContainer.preSubmitted{
         flex-direction: column;
+        padding-top: 100px;
+        justify-content: flex-start;
+        min-height: 750px;
+    }
+
+
+    .headerContainer.submitted {
+        padding-top: 15px;
+        justify-content: center;
+        min-height: 0;
     }
 
     .logoContainer {
-        width: 50%;
+        width: 25%;
     }
 
     .logoContainer.submitted {
@@ -74,6 +84,11 @@
 }
 
 @media (max-width: 600px) {
+    .headerContainer{
+        padding-top: 100px;
+        // height: auto;
+    }
+    
     form.submitted {
         align-items: stretch;
         width: 100%;
@@ -94,7 +109,7 @@
     }
 
     header.submitted {
-        height: 20vh;
+        height: 140px;
     }
 }
 
@@ -106,6 +121,14 @@
         font-size: 1.2rem;
         padding: 0;
     }
+    .headerContainer.preSubmitted {
+        min-height: 600px;
+    }
+
+    .headerContainer.submitted {
+        min-height: 0;
+    }
+    
 }
 
 @media (max-width: 380px) {
