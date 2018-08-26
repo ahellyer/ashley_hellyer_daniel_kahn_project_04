@@ -40,7 +40,7 @@ app.randomMovies = [
     'Incendies',
     'Das Boot',
     'City of God',
-    ' Pan\'s Labyrinth',
+    'Pan\'s Labyrinth',
     'The Sea Inside',
     'Let the Right One In',
     'About Elly',
@@ -162,8 +162,6 @@ app.getMovies = function () {
                     app.movieInfo.poster = res.poster_path;
                     app.movieInfo.vote_average = res.vote_average;
                     app.movieInfo.prodCountries = prodCountries;
-
-                    app.movieInfo.tagline = res.tagline;
     
                     // Send the list of production countries to the displayMovies function
                     app.displayMovies(prodCountries);
@@ -175,6 +173,8 @@ app.getMovies = function () {
 };
 
 app.map = L.map("map").setView([30, 0], 2);
+
+app.map.scrollWheelZoom.disable();
 
 // Display Map
 app.displayMap = function(){
@@ -197,34 +197,51 @@ app.displayMap = function(){
 
 app.displayMovies = function (countryList) {
 
+    // Poster
     const moviePosterContainer = $('<div>').addClass('moviePoster');
     const moviePosterImg = $('<img>').attr('src',`https://image.tmdb.org/t/p/w1280/${app.movieInfo.poster}`);
     moviePosterContainer.append(moviePosterImg);
     
-    const movieTitle = $('<h2>').text(`${app.movieInfo.title}`);
+    // Title and Description
+    const titleDescription = $('<div>').attr('class', 'titleDescription');
+    const movieTitle = $('<h2>').text(`${app.movieInfo.title}`).attr('class', 'infoTitle');
     const overview = $('<p>').text(`${app.movieInfo.overview}`);
+    titleDescription.append(movieTitle, overview);
 
-    const tagTitle = $('<h3>').text('Tag Line');
+    // Tagline
+    const taglineDiv = $('<div>').attr('class', 'taglineDiv');
+    const tagTitle = $('<h3>').text('Tag Line').attr('class', 'infoTitle');
     const tagline = $('<p>').attr('class','tagline').text(`${app.movieInfo.tagline}`);
+    taglineDiv.append(tagTitle, tagline);
     
-    const vote_average = $('<li>').append($('<h3>').text(`${app.movieInfo.vote_average}/10`));
-    
-    const prodCountries = $('<li>').append($('<h3>').text('Production Countries'));
+    // Production Countries
+    const prodCountries = $('<div>').attr('class', 'prodCountriesSection');
+    const prodCountriesHeader = $('<h3>').text('Production Countries').attr('class', 'infoTitle');
     const prodCountriesUl = $('<ul>').addClass('prodCountries');
     app.movieInfo.prodCountries.forEach(country => {
         const countryLi = $('<li>').text(`${country}`).addClass('prodCountry');
         prodCountriesUl.append(countryLi);
     });
-    prodCountries.append(prodCountriesUl);
+    prodCountries.append(prodCountriesHeader, prodCountriesUl)
     
-    const movieList = $('<ul>').addClass('movieInfoList');
-    movieList.append(prodCountries, vote_average);
+    // Vote average
+    const voteAverageOuter = $('<div>').attr('class', 'voteAverageDivOuter');
+    const scoreTitle = $('<h3>').text('Average Score').attr('class', 'infoTitle');
+    const voteAverage = $('<div>').attr('class','voteAverageDiv');
+    const score = $('<p>').text(`${app.movieInfo.vote_average}`);
+    voteAverage.append(score);
+    voteAverageOuter.append(scoreTitle, voteAverage);
 
+    // Movie info other than the poster
     const movieTextInfo = $('<div>').attr('class','movieTextInfo');
 
-
-
-    movieTextInfo.append(movieTitle, overview, tagTitle, tagline, movieList);
+    // If there is no tagline do not append taglineDiv
+    if (app.movieInfo.tagline !== "") {
+        movieTextInfo.append(titleDescription, taglineDiv, voteAverageOuter, prodCountries);
+    }
+    else {
+        movieTextInfo.append(titleDescription, voteAverageOuter, prodCountries);
+    };
     
     $('#movieInfo').empty();
     $('#movieInfo').append(moviePosterContainer, movieTextInfo);
