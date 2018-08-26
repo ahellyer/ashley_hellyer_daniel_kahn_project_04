@@ -276,6 +276,9 @@ button {
   display: inline-block;
   background: rgba(255, 255, 255, 0.7); }
 
+button:hover {
+  background: rgba(255, 255, 255, 0.4); }
+
 form.submitted button {
   flex: 1 0 calc(25% - 15px);
   margin-left: 10px; }
