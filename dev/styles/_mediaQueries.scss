@@ -42,7 +42,9 @@
     
 }
 
-@media (max-width: 750px) {
+
+
+@media (max-width: 770px) {
     .headerContainer.preSubmitted{
         flex-direction: column;
         padding-top: 100px;
@@ -81,6 +83,26 @@
     ::placeholder {
         text-align: center;
     }
+
+    ////////////////
+    // MOVIE INFO //
+    ////////////////
+
+    .movieInfo .moviePoster {
+        display: none;
+    }   
+
+    .moviePosterInsideText {
+        display: block;
+        float: left;
+        width: 45%;
+        padding-right: 20px;
+    }   
+
+    .movieTextInfo {
+        padding-left: 0;
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -111,6 +133,29 @@
     header.submitted {
         height: 140px;
     }
+    
+    ////////////////
+    // MOVIE INFO //
+    ////////////////
+
+    .prodCountriesSection {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .prodCountries {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+
+    .voteAverageDivOuter {
+        margin: 0 auto;
+    }
+
+    h2, h3 {
+        text-align: center;
+    }
 }
 
 @media (max-width: 450px) {
@@ -128,6 +173,18 @@
     .headerContainer.submitted {
         min-height: 0;
     }
+    
+    ////////////////
+    // MOVIE INFO //
+    ////////////////
+    .moviePosterInsideText {
+        width: 100%;
+        padding-right: 0;
+        padding-bottom: 15px;
+    }   
+
+
+
     
 }
 

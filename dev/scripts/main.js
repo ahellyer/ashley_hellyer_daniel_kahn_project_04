@@ -199,20 +199,32 @@ app.displayMovies = function (countryList) {
 
     // Poster
     const moviePosterContainer = $('<div>').addClass('moviePoster');
-    const moviePosterImg = $('<img>').attr('src',`https://image.tmdb.org/t/p/w1280/${app.movieInfo.poster}`);
+    const moviePosterImg = $('<img>').attr({
+        src: `https://image.tmdb.org/t/p/w1280/${app.movieInfo.poster}`,
+        alt: `Movie poster for ${app.movieInfo.title}`
+    });
     moviePosterContainer.append(moviePosterImg);
+    
+    // Would not work with the same moviePosterContainer ... not sure why ...
+    const moviePosterContainer2 = $('<div>').addClass('moviePosterInsideText');
+    const moviePosterImg2 = $('<img>').attr({
+        src: `https://image.tmdb.org/t/p/w1280/${app.movieInfo.poster}`,
+        alt: `Movie poster for ${app.movieInfo.title}`
+    });
+    moviePosterContainer2.append(moviePosterImg2);
     
     // Title and Description
     const titleDescription = $('<div>').attr('class', 'titleDescription');
     const movieTitle = $('<h2>').text(`${app.movieInfo.title}`).attr('class', 'infoTitle');
     const overview = $('<p>').text(`${app.movieInfo.overview}`);
-    titleDescription.append(movieTitle, overview);
+    titleDescription.append(movieTitle, moviePosterContainer2, overview);
 
     // Tagline
     const taglineDiv = $('<div>').attr('class', 'taglineDiv');
-    const tagTitle = $('<h3>').text('Tag Line').attr('class', 'infoTitle');
+    // const tagTitle = $('<h3>').text('Tag Line').attr('class', 'infoTitle');
     const tagline = $('<p>').attr('class','tagline').text(`${app.movieInfo.tagline}`);
-    taglineDiv.append(tagTitle, tagline);
+    // taglineDiv.append(tagTitle, tagline);
+    taglineDiv.append(tagline);
     
     // Production Countries
     const prodCountries = $('<div>').attr('class', 'prodCountriesSection');
