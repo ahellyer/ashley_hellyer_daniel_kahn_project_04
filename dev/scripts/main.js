@@ -162,11 +162,6 @@ app.getMovies = function () {
                     app.movieInfo.poster = res.poster_path;
                     app.movieInfo.vote_average = res.vote_average;
                     app.movieInfo.prodCountries = prodCountries;
-<<<<<<< HEAD
-
-=======
-                    app.movieInfo.tagline = res.tagline;
->>>>>>> 2467aa749a2fea27abcb41289175e2e639bf3e69
     
                     // Send the list of production countries to the displayMovies function
                     app.displayMovies(prodCountries);
@@ -208,7 +203,7 @@ app.displayMovies = function (countryList) {
     const overview = $('<p>').text(`${app.movieInfo.overview}`);
 
     const tagTitle = $('<h3>').text('Tag Line');
-    const tagline = $('<p>').text(`${app.movieInfo.tagline}`);
+    const tagline = $('<p>').attr('class','tagline').text(`${app.movieInfo.tagline}`);
     
     const vote_average = $('<li>').append($('<h3>').text(`${app.movieInfo.vote_average}/10`));
     
