@@ -162,6 +162,11 @@ form input {
     opacity: 1; /* Firefox */
 }
 
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
+
 form.submitted input {
 	flex: 1 0 50%;
 	margin-bottom: 0;
