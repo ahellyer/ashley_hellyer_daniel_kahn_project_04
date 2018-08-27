@@ -65,7 +65,7 @@ app.events = function () {
         app.map.eachLayer(function (layer) {
             app.map.removeLayer(layer);
         });
-        
+
         app.displayMap();
 
         // Stores value of the movie the user enters
@@ -176,27 +176,24 @@ app.map = L.map("map").setView([30, 0], 2);
 
 app.map.scrollWheelZoom.disable();
 
+
 // Display Map
 app.displayMap = function(){
     //display base map on the page, setting view and zoom level
-    // const map = L.map("map").setView([30, 0], 2);
+    //if less than 600px wide zoom level will be decreased
+    if (app.mobile===true) {
+        app.map.remove()
+        app.map = L.map("map").setView([15, 0], 1);
+        app.map.scrollWheelZoom.disable();
+    }
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(app.map);
 };
 
-// Display three movies on the page
-// For each movie display
-//// Poster
-//// Title
-//// Plot summary
-//// Audience rating (Example 82% or 8.2/10)
-//// Top billed case (first n people from the credits)
-//////  Example of credits query for Reservoir Dogs: https://api.themoviedb.org/3/movie/500/credits?api_key=972b4433f3e8f302aee3055dd209330c
-
 app.displayMovies = function (countryList) {
-
+   
     // Poster
     const moviePosterContainer = $('<div>').addClass('moviePoster');
     const moviePosterImg = $('<img>').attr({
@@ -258,15 +255,6 @@ app.displayMovies = function (countryList) {
     $('#movieInfo').empty();
     $('#movieInfo').append(moviePosterContainer, movieTextInfo);
 
-
-
-    // //display base map on the page, setting view and zoom level
-    // const map = L.map("map").setView([30, 0], 2);
-
-    // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(map);
-
     //create empty array for coordinate objects for each production country
     const movieCountriesCoordinates = [];
 
@@ -279,17 +267,14 @@ app.displayMovies = function (countryList) {
             })
         );
         
-        console.log(movieCountriesCoordinates);
     };
     
     //for each production country, filter through app.world using the getCoordinates function
     countryList.forEach((country) => {
-        console.log(`CL running`);
         getCoordinates(country)
     });
 
-    //empty array which will receive the final map features information to display on the page
-    // const mapFeatures = [];
+   
     //constructing map features for each country in the movieCountries array using forEach to get the geometry object which we will send to the mapFeatures array
 
     const myLayer = L.geoJson().addTo(app.map);
@@ -302,20 +287,27 @@ app.displayMovies = function (countryList) {
             "type": "Feature",
             "geometry": geometryObject
         }
-        console.log(countryFeature)
+        
         //we need to add that object to the mapfeatures array
         myLayer.addData(countryFeature);
-        console.log('myLayer');
-        console.log(myLayer);
+        
     });
 
 };// end of displayMovies
 
+app.mobile = false;
+
 // Start app
 app.init = function () {
     app.events();
+
+    if (window.matchMedia("(max-width: 600px)").matches) {
+        app.mobile = true;
+        
+    } 
+
     app.displayMap();
-    
+
 };
 
 $(function () {
